@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice-Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+   <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-light">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h3 class="mb-4">Dashboard</h3>
+        <nav class="nav flex-column">
+            <a class="nav-link active" href="./index.html"><i class="fas fa-home me-2"></i>Home</a>
+            <a class="nav-link" href="./analytics.html"><i class="fas fa-chart-line me-2"></i>Analytics</a>
+            <a class="nav-link" href="#"><i class="fas fa-users me-2"></i>Users</a>
+            <a class="nav-link" href="#"><i class="fas fa-cog me-2"></i>Settings</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container-fluid">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Dashboard Overview</h2>
+                <div class="btn-group">
+                    <button class="btn btn-outline-primary">Export</button>
+                    <button class="btn btn-primary">Add New</button>
+                </div>
+            </div>
+
+            <!-- Stat Cards -->
+            <div class="row mb-4">
+                <div class="col-md-3 mb-3">
+                    <div class="stat-card card bg-primary text-white">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Users</h5>
+                            <h2 class="mb-0">1120</h2>
+                            <small class="text-white-50">↑ 1% from last month</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="stat-card card bg-success text-white">
+                        <div class="card-body">
+                            <h5 class="card-title">Revenue</h5>
+                            <h2 class="mb-0">$1501</h2>
+                            <small class="text-white-50">↑ 8% from last month</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="stat-card card bg-warning text-white">
+                        <div class="card-body">
+                            <h5 class="card-title">Orders</h5>
+                            <h2 class="mb-0">384</h2>
+                            <small class="text-white-50">↓ 3% from last month</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="stat-card card bg-info text-white">
+                        <div class="card-body">
+                            <h5 class="card-title">Visits</h5>
+                            <h2 class="mb-0">122</h2>
+                            <small class="text-white-50">↑ 24% from last month</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chart -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="chart-container">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity Table -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0">Recent Activity</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>User</th>
+                                            <th>Activity</th>
+                                            <th>Date</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>RAGHAV</td>
+                                            <td>Purchased Premium Plan</td>
+                                            <td>2024-02-23</td>
+                                            <td><span class="badge bg-success">Completed</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>DIXIT</td>
+                                            <td>Updated Profile</td>
+                                            <td>2024-02-28</td>
+                                            <td><span class="badge bg-info">In Progress</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>CDAC-USERS</td>
+                                            <td>Submitted Report</td>
+                                            <td>2024-04-12</td>
+                                            <td><span class="badge bg-warning">Pending</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+    <script>
+        // Sample chart data From random version only
+        const ctx = document.getElementById('myChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Monthly Revenue',
+                    data: [12000, 19000, 15000, 25000, 22000, 30000],
+                    borderColor: '#2c3e50',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

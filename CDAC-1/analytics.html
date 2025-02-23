@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --sidebar-width: 250px;
+        }
+        
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding: 20px;
+            background-color: #2c3e50;
+            color: white;
+        }
+        
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 20px;
+        }
+        
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        .chart-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+        
+        .metric-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .date-selector {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h3 class="mb-4">Dashboard</h3>
+        <nav class="nav flex-column">
+            <a class="nav-link" href="#"><i class="fas fa-home me-2"></i>Home</a>
+            <a class="nav-link active" href="#"><i class="fas fa-chart-line me-2"></i>Analytics</a>
+            <a class="nav-link" href="#"><i class="fas fa-users me-2"></i>Users</a>
+            <a class="nav-link" href="#"><i class="fas fa-cog me-2"></i>Settings</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container-fluid">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Analytics Overview</h2>
+                <div class="date-selector">
+                    <div class="btn-group">
+                        <button class="btn btn-outline-primary active">Day</button>
+                        <button class="btn btn-outline-primary">Week</button>
+                        <button class="btn btn-outline-primary">Month</button>
+                        <button class="btn btn-outline-primary">Year</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Metrics -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="metric-card">
+                        <h6 class="text-muted mb-2">Page Views</h6>
+                        <h3 class="mb-0">45,232</h3>
+                        <small class="text-success">↑ 23% vs last period</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="metric-card" style="border-left-color: #2ecc71;">
+                        <h6 class="text-muted mb-2">Bounce Rate</h6>
+                        <h3 class="mb-0">32.8%</h3>
+                        <small class="text-danger">↑ 4% vs last period</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="metric-card" style="border-left-color: #e74c3c;">
+                        <h6 class="text-muted mb-2">Avg. Session</h6>
+                        <h3 class="mb-0">4m 23s</h3>
+                        <small class="text-success">↑ 12% vs last period</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="metric-card" style="border-left-color: #f1c40f;">
+                        <h6 class="text-muted mb-2">Conversion Rate</h6>
+                        <h3 class="mb-0">2.4%</h3>
+                        <small class="text-success">↑ 8% vs last period</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Traffic Sources & User Behavior -->
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="chart-card">
+                        <h5 class="mb-4">Traffic Overview</h5>
+                        <canvas id="trafficChart"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="chart-card">
+                        <h5 class="mb-4">Traffic Sources</h5>
+                        <canvas id="sourcesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Demographics & Devices -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="chart-card">
+                        <h5 class="mb-4">User Demographics</h5>
+                        <canvas id="demographicsChart"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="chart-card">
+                        <h5 class="mb-4">Device Usage</h5>
+                        <canvas id="devicesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+           
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+    <script>
+        // Traffic Overview Chart
+        new Chart(document.getElementById('trafficChart'), {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'This Week',
+                    data: [4200, 5300, 6500, 4900, 7000, 5500, 4800],
+                    borderColor: '#3498db',
+                    tension: 0.4
+                }, {
+                    label: 'Last Week',
+                    data: [3800, 4900, 5900, 4500, 6500, 5100, 4400],
+                    borderColor: '#e74c3c',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    }
+                }
+            }
+        });
+
+        // Traffic Sources Chart
+        new Chart(document.getElementById('sourcesChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Direct', 'Organic', 'Referral', 'Social'],
+                datasets: [{
+                    data: [30, 40, 15, 15],
+                    backgroundColor: ['#3498db', '#2ecc71', '#e74c3c', '#f1c40f']
+                }]
+            }
+        });
+
+        // Demographics Chart
+        new Chart(document.getElementById('demographicsChart'), {
+            type: 'bar',
+            data: {
+                labels: ['18-24', '25-34', '35-44', '45-54', '55+'],
+                datasets: [{
+                    label: 'Age Distribution',
+                    data: [15, 30, 25, 18, 12],
+                    backgroundColor: '#3498db'
+                }]
+            }
+        });
+
+        // Devices Chart
+        new Chart(document.getElementById('devicesChart'), {
+            type: 'pie',
+            data: {
+                labels: ['Desktop', 'Mobile', 'Tablet'],
+                datasets: [{
+                    data: [45, 45, 10],
+                    backgroundColor: ['#2ecc71', '#e74c3c', '#f1c40f']
+                }]
+            }
+        });
+    </script>
+</body>
+</html>
